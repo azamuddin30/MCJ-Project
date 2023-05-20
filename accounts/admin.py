@@ -1,15 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser  #, Team
+from .forms import UserCreationForm, UserEditForm, TeamRegisterForm
+from .models import User, Team
 
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-    model = CustomUser
+    add_form = UserCreationForm
+    form = UserEditForm
+    model = User
     list_display = [
         "email",
         "username",
@@ -19,4 +19,5 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = UserAdmin.add_fieldsets 
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)
+admin.site.register(Team)

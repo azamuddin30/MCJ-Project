@@ -1,22 +1,22 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser  #, Team
+# from django import forms
+# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+# from .models import CustomUser  #, Team
 
 
-class CustomUserCreationForm(UserCreationForm):
-    #team = forms.ModelChoiceField(queryset=Team.objects.all())
+# class CustomUserCreationForm(UserCreationForm):
+#     #team = forms.ModelChoiceField(queryset=Team.objects.all())
 
-    class Meta(UserCreationForm):
-        model = CustomUser
-        fields = UserCreationForm.Meta.fields + ("email",)
+#     class Meta(UserCreationForm):
+#         model = CustomUser
+#         fields = UserCreationForm.Meta.fields + ("email",)
 
 
-class CustomUserChangeForm(UserChangeForm):
-    #team = forms.ModelChoiceField(queryset=Team.objects.all())
+# class CustomUserChangeForm(UserChangeForm):
+#     #team = forms.ModelChoiceField(queryset=Team.objects.all())
 
-    class Meta:
-        model = CustomUser
-        fields = UserChangeForm.Meta.fields
+#     class Meta:
+#         model = CustomUser
+#         fields = UserChangeForm.Meta.fields
 
 
 # class RegisterTeamForm(forms.Form):
@@ -29,3 +29,26 @@ class CustomUserChangeForm(UserChangeForm):
 #             raise forms.ValidationError("Team name already exists.")
 
 #         return team_name
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import User, Team
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+class TeamRegisterForm(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ['name', 'description']
+
+class UserEditForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'team']
