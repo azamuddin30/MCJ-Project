@@ -1,0 +1,20 @@
+{% extends "registration/base.html" %} 
+{% load django_bootstrap5 %}
+
+
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<h2> HOME PAGE</h2>
+
+{% if user.is_authenticated %}
+Hi {{ user.username }}! You are {{ user.email }}
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a> |
+<a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+{% endblock content %}
