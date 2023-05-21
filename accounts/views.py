@@ -29,7 +29,7 @@ class RegisterUserView(FormView):
 class RegisterTeamView(LoginRequiredMixin,FormView):
     template_name = 'registration/signup_team.html'
     form_class = TeamRegisterForm
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("home")
 
 
     def form_valid(self, form):
@@ -39,7 +39,7 @@ class RegisterTeamView(LoginRequiredMixin,FormView):
 class EditUserView(LoginRequiredMixin, FormView):
     template_name = 'registration/edit_user.html'
     form_class = UserEditForm
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("home")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
