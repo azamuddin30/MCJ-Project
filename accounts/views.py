@@ -19,7 +19,6 @@ from django.urls import reverse_lazy
 class RegisterUserView(FormView):
     template_name = 'registration/signup.html'
     form_class = UserRegisterForm
-    # success_url = '/home/'
     success_url = reverse_lazy("login")
 
     def form_valid(self, form):

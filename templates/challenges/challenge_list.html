@@ -1,0 +1,15 @@
+{% extends "registration/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<h1>Challenges</h1>
+
+{% for challenge in challenge_list %}
+    <div>
+        <H2></H2><a href="{{challenge.get_absolute_url}}">{{ challenge.title }} <span>{{ challenge.point }}</span></a></H2>
+    </div>
+{% endfor %}
+
+
+{% endblock %}
