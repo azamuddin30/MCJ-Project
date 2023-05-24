@@ -155,7 +155,7 @@ class ChallengeDetailView(LoginRequiredMixin, FormView):
 
                 else:
                     # Flag is correct but entry already exists in AcceptedSolution
-                    messages.add_message(self.request, 'Flag is correct but already submitted')
+                    messages.warning(self.request, 'Flag is correct but already submitted')
             else :
                 # Flag is correct but user is staff or superuser
                 messages.warning(self.request, 'Flag is correct but user is not a contestant')

@@ -8,7 +8,7 @@ class ScoreboardUser(models.Model) :
     score = models.BigIntegerField(default=0)
 
     def __str__(self) -> str:
-        return self.user
+        return self.user.username
 
 
 class ScoreboardTeam(models.Model) :
@@ -16,7 +16,7 @@ class ScoreboardTeam(models.Model) :
     score = models.BigIntegerField(default=0)
 
     def __str__(self) -> str:
-        return self.team
+        return self.team.name
 
 class AcceptedSolution(models.Model) :
     team = models.ForeignKey(Team, on_delete=models.CASCADE)

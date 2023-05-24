@@ -1,0 +1,34 @@
+{% extends "registration/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}User Ranking{% endblock title%}
+
+{% block content %}
+
+
+<h1>Ranking</h1>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>User</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user_score in user_scores %}
+            <tr>
+            {% with forloop.counter as rank %}
+                <td>{{ rank }}</td>
+                <td>{{ user_score.user.username }}</td>
+                <td>{{ user_score.score }}</td>
+            {% endwith %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
