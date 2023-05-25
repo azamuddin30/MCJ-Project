@@ -4,7 +4,7 @@
 <html>
   <head>
     {% load django_bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
-    {% bootstrap_messages %}
+    {% comment %} {% bootstrap_messages %} {% endcomment %}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{%block title%}CTF_Games{%endblock title%}</title>
@@ -15,8 +15,6 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'home' %}">Home</a>
         </li>
-        <!-- <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li> -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'register_team' %}">Register team</a>
         </li>
@@ -40,10 +38,10 @@
         </li>
         {% endif %} {% if user.is_authenticated %}
                 <li class="nav-item">
-          <a class="nav-link" href="{% url 'register_team' %}">Register team</a>
+          <a class="nav-link" href="{% url 'password_reset' %}">Reset Password</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'edit_user' %}">Edit profile</a>
+          <a class="nav-link" href="{% url 'password_change' %}">Change Password</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'view_challenge' %}">Challenge</a>
