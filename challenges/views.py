@@ -122,7 +122,7 @@ class ChallengeListView(LoginRequiredMixin, ListView):
 class ChallengeForm(forms.Form):
     flag = forms.CharField(label='Flag', max_length=255)
 
-class ChallengeDetailView(LoginRequiredMixin, FormView):
+class ChallengeDetailView(LoginRequiredMixin,UserPassesTestMixin,FormView):
     template_name = 'challenges/challenge_detail.html'
     form_class = ChallengeForm
     success_url = reverse_lazy('view_challenge')
@@ -163,3 +163,10 @@ class ChallengeDetailView(LoginRequiredMixin, FormView):
             # Flag is incorrect
                 messages.error(self.request, 'Flag is incorrect')
         return super().form_valid(form)
+
+    def test_func(self):
+        return self.request.user.team is not None
+
+    def handle_no_permission(self):
+        messages.warning(self.request, 'Please register yourself into team or register your team')
+        return redirect('edit_user')
