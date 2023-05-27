@@ -14,6 +14,7 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "username",
         "is_staff",
+        "is_superuser",
     ]
     fieldsets = UserAdmin.fieldsets + (
         ('Team', {'fields': ('team',)}),
@@ -23,5 +24,9 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ("name", "description")
+
+
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Team)
+admin.site.register(Team, TeamAdmin)

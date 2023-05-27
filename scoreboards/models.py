@@ -21,4 +21,5 @@ class ScoreboardTeam(models.Model) :
 class AcceptedSolution(models.Model) :
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
-
+    def __str__(self) -> str:
+        return f"{self.challenge.title} --> {self.team.name}"

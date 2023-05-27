@@ -1,6 +1,22 @@
 from django.contrib import admin
-from.models import ScoreboardUser, ScoreboardTeam, AcceptedSolution
+from .models import ScoreboardUser, ScoreboardTeam, AcceptedSolution
+
+
 # Register your models here.
-admin.site.register(ScoreboardUser)
-admin.site.register(ScoreboardTeam)
-admin.site.register(AcceptedSolution)
+
+
+class ScoreboardUserAdmin(admin.ModelAdmin):
+    list_display = ("user", "score")
+
+
+class ScoreboardTeamAdmin(admin.ModelAdmin):
+    list_display = ("team", "score")
+
+
+class AcceptedSolutionAdmin(admin.ModelAdmin):
+    list_display = ("team", "challenge")
+
+
+admin.site.register(ScoreboardUser, ScoreboardUserAdmin)
+admin.site.register(ScoreboardTeam, ScoreboardTeamAdmin)
+admin.site.register(AcceptedSolution, AcceptedSolutionAdmin)
