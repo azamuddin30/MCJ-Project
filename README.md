@@ -1,4 +1,35 @@
-# test
+# MyCyberJebat CTF Platform
+
+##### Requirements : docker
+
+'''
+to start docker container, change directory to project directory, where manage.py reside.
+then run this. if use latest docker compose, just replace "docker-compose" to "docker compose"
+
+'''
+
+1. cd /path/to/your/fav/directory
+
+2. Run git clone https://github.com/azamuddin30/MCJ-Project.git
+
+3.  run docker-compose 
+
+'''
+
+        docker-compose up -d --build
+        docker-compose exec web python manage.py migrate
+        // if migrate failed, we might have to clear previous migrations file in challenges and scoreboards
+                 docker-compose exec web rm -r challenges/migrations
+                 docker-compose exec web rm -r scoreboards/migrations
+        // then run again 
+                 docker-compose exec web python manage.py migrate
+
+        docker-compose exec web python manage.py createsuperuser
+        // go to localhost:8080 in browser. login with superuser credentials.
+        // to stop 
+        docker-compose down
+'''
+
 
 
 
