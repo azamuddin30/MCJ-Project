@@ -27,11 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# to regenerate new SECRET_KEY :
-# from django.core.management.utils import get_random_secret_key
-# get_random_secret_key()
-# append it to "django-insecure-{APPEND HERE WITHOUT CURLY}""
+"""
+SECURITY WARNING: keep the secret key used in production secret!
+to regenerate new SECRET_KEY :
+from django.core.management.utils import get_random_secret_key
+get_random_secret_key()
+or docker-compose exec web python -c "import secrets; print(secrets.token_urlsafe(38))"
+With Base64 encoding on average each byte has 1.3 characters. So using 38 results in 51 characters
+in this case
+"""
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
