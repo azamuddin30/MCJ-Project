@@ -11,7 +11,14 @@
   {%bootstrap_button button_type="reset" content="Reset"%}
   {%bootstrap_button button_type="submit" content="OK"%} 
 </form>
+
 <hr>
-<div class="container"><a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a></div>
+<div class="container">
+  <div class="row">
+    <div class="col"><a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a></div>
+    <div class="col-6"></div>
+    <div class="col"><a href="{% url 'register_team' %}" class="btn btn-primary">Register Team</a></div>
+  </div>
+</div>
 
 {% endblock content %}

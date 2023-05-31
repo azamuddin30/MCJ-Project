@@ -1,15 +1,7 @@
 version: "3.9"
 
 services:
-  web:
-    build: .
-    command: gunicorn MCJCTF.wsgi -b 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - 8080:8000
-    depends_on:
-      - db
+
   db:
     image: postgres:15
     volumes:
@@ -17,5 +9,36 @@ services:
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
 
+    networks:
+      service-network:
+        aliases:
+          - db
+
+  web:
+    build: .
+    command: gunicorn MCJCTF.wsgi -b 0.0.0.0:8080
+    volumes:
+      - .:/code
+    ports:
+      - 8080:8080
+    environment:
+      - "DJANGO_SECRET_KEY=django-insecure-has@*g4(tqpe^3aes6vzf(5qyuxlg4&e@%8w@^gv8ueqa%of=b"
+      - "DJANGO_DEBUG=True"
+
+    links:
+      - db:db
+    depends_on:
+      - db
+    networks:
+      service-network:
+        aliases:
+          - web
+
 volumes:
   postgres_data:
+
+
+networks:
+  service-network:
+    name: service-network
+    driver: bridge
