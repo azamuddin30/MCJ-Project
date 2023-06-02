@@ -25,6 +25,7 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("challenges/", include("challenges.urls")),
     path("scoreboards/", include("scoreboards.urls")),
+    path("forums/", include("forum.urls")),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
 
   

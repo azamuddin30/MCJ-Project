@@ -7,7 +7,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASS=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+
 
     networks:
       service-network:
@@ -16,14 +21,17 @@ services:
 
   web:
     build: .
-    command: gunicorn MCJCTF.wsgi -b 0.0.0.0:8080
+    command: gunicorn MCJCTF.wsgi -b 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
-      - 8080:8080
+      - 8000:8000
     environment:
-      - "DJANGO_SECRET_KEY=django-insecure-has@*g4(tqpe^3aes6vzf(5qyuxlg4&e@%8w@^gv8ueqa%of=b"
-      - "DJANGO_DEBUG=True"
+      - DJANGO_SECRET_KEY=django-insecure-has@*g4(tqpe^3aes6vzf(5qyuxlg4&e@%8w@^gv8ueqa%of=b
+      - DJANGO_DEBUG=True
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
     links:
       - db:db

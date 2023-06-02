@@ -7,6 +7,8 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.hashers import make_password
 # from django.db.models import Q
 # Create your views here.
+from django.http import HttpResponse
+from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import CreateView, FormMixin
 from django.views.generic.list import ListView
@@ -19,7 +21,7 @@ from scoreboards.models import ScoreboardUser, ScoreboardTeam, AcceptedSolution
 
 class ChallengeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Challenge
-    fields = ["title", "category", "description", "flag", "point", "challenge_file"]
+    fields = ["title", "category", "description", "flag", "point", "challenge_file_link"]
     template_name = "challenges/challenge_form.html"
     success_url = reverse_lazy("view_challenge")
 
@@ -158,15 +160,17 @@ class ChallengeDetailView(LoginRequiredMixin,UserPassesTestMixin,FormView):
                     messages.warning(self.request, 'Flag is correct but already submitted')
             else :
                 # Flag is correct but user is staff or superuser
-                messages.warning(self.request, 'Flag is correct but user is not a contestant')
+                messages.warning(self.request, 'Flag is correct')
         else:
             # Flag is incorrect
                 messages.error(self.request, 'Flag is incorrect')
         return super().form_valid(form)
 
     def test_func(self):
-        return self.request.user.team is not None
+        return self.request.user.team is not None or self.request.user.is_staff or self.request.user.is_superuser
 
     def handle_no_permission(self):
         messages.warning(self.request, 'Please register yourself into team or register your team')
         return redirect('edit_user')
+
+

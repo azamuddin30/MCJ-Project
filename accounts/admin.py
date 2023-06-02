@@ -10,9 +10,9 @@ class CustomUserAdmin(UserAdmin):
     add_form = UserCreationForm
     form = UserEditForm
     model = User
-    list_display = [
-        "email",
+    list_display = [  
         "username",
+        "email",
         "is_staff",
         "is_superuser",
     ]

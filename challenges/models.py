@@ -13,7 +13,7 @@ class Challenge(models.Model):
     category = models.CharField(max_length=100, blank=True)
     flag = models.CharField(max_length=255, blank=True, default="")
     description = models.TextField()
-    challenge_file = models.FileField(upload_to="challenges/", blank=True)
+    challenge_file_link = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     point = models.IntegerField()
 
