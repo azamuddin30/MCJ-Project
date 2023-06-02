@@ -70,6 +70,7 @@ class CommentPost(SingleObjectMixin, FormView):
     def form_valid(self, form):
         comment = form.save(commit=False)
         comment.head = self.object
+        comment.author = self.request.user
         comment.save()
         return super().form_valid(form)
 
@@ -80,7 +81,7 @@ class CommentPost(SingleObjectMixin, FormView):
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): 
     model = Comment
     template_name = "forums/comment_delete.html"
-    success_url = reverse_lazy("forum_list")
+    success_url = reverse_lazy("head_list")
 
     def test_func(self):  
         obj = self.get_object()

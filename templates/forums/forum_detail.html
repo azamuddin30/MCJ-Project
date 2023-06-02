@@ -6,7 +6,7 @@
 <div class="article-entry">
   <h2>{{ object.title }}</h2>
   <p>by {{ object.author }} | {{ object.date }}</p>
-  <p>{{ object.body }}</p>
+  <p>{{ object.description }}</p>
 </div>
 
 <hr>
@@ -16,14 +16,17 @@
 {% endfor %}
 <hr>
 
+<div class="">
 <h4>Add a comment</h4>
-  <form action="" method="post">{% csrf_token %}
-    {%bootstrap_form form%} 
-    <button class="btn btn-success ml-2" type="submit">Save</button>
+  <form action="" method="post">
+    {% csrf_token %}
+    {%bootstrap_form form %} 
+    <button class="btn btn-success ml-2" type="submit">Post</button>
   </form>
-
-<p><a href="{% url 'head_edit' head.pk %}">Edit</a> |
-  <a href="{% url 'head_delete' head.pk %}">Delete</a></p>
-<p>Back to <a href="{% url 'head_list' %}">Forum</a>.</p>
-
+</div>
+<div class="d-flex justify-content-around m-3">
+  <div><p><a href="{% url 'head_list' %}">Back to Forum</a></p></div>
+  <div><p><a href="{% url 'head_edit' head.pk %}">Edit</a></div> 
+  <div><a href="{% url 'head_delete' head.pk %}">Delete</a></p></div>
+</div>
 {% endblock content %}

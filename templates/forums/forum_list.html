@@ -1,37 +1,40 @@
-{% extends "registration/base.html" %}
-{% load django_bootstrap5 %}
-{% block title %}Forum{% endblock title %}
-
+{% extends "registration/base.html" %} 
+{% load django_bootstrap5 %} 
+{% block title %}Forum{% endblock title %} 
 {% block content %}
-<div class="p-5 text-white text-center" >
+<div class="p-5 text-white text-center">
   <h1>Forum</h1>
+</div>
+<div class="p-2 text-white text-end">
+  <a href="{% url 'head_new' %}" class="btn btn-primary">+ new question</a>
 </div>
 
 {% for head in head_list %}
-  <div class="card">
-    <div class="card-header">
-      <span class="font-weight-bold">{{ head.title }}</span> &middot;
-      <span class="text-muted">by {{ head.author }} |
-      {{ head.date }}</span>
-    </div>
-    <div class="card-body">
-      <!-- Changes start here! -->
-      <p>{{ head.description }}</p>
-      <a href="{% url 'head_edit' head.pk %}">Edit</a> |
-      <a href="{% url 'head_delete' head.pk %}">Delete</a>
-    </div>
-    <div class="card-footer">
-      {% for comment in head.comment_set.all %}
-        <p>
-          <span class="font-weight-bold">
-            {{ comment.author }} &middot;
-          </span>
-          {{ comment.body }}
-        </p>
-        <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
-      {% endfor %}
-    </div>
-  
+<div class="card m-4">
+  <div class="card-header">
+    <span class="font-weight-bold"
+      ><a href="{% url 'head_detail' head.pk %}">{{ head.title }}</a></span
+    >
+    &middot;
+    <span class="text-muted">by {{ head.author }} | {{ head.date }}</span>
   </div>
-{% endfor %}
+  <div class="card-body">
+    <!-- Changes start here! -->
+    <p>{{ head.description }}</p>
+    <a href="{% url 'head_edit' head.pk %}">Edit</a> |
+    <a href="{% url 'head_delete' head.pk %}">Delete</a>
+  </div>
+  <div class="card-footer">
+    {% for comment in head.comment_set.all %}
+    <div class="container p-2 my-1 bg-dark text-white">
+      <p>
+        <span class="font-weight-bold"> {{ comment.author }} &middot; </span>
+        {{ comment.body }}
+      </p>
+      <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %} 
 {% endblock content %}

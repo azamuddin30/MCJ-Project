@@ -1,9 +1,10 @@
 {% extends "registration/base.html" %}
 {% load django_bootstrap5 %}
 
+{%block title %}Sign Up{% endblock title%}
 
 {% block content %}
-<h2>Sign Up Team</h2>
+<h2 class="container">Sign Up Team</h2>
 <form method="post" class="container">
   {%csrf_token %} 
   {%bootstrap_form form%} 
