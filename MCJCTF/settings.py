@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     # 3rd party app
     "whitenoise.runserver_nostatic",  # new
     "django.contrib.staticfiles",
@@ -76,6 +77,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+SITE_ID = 1
 ROOT_URLCONF = "MCJCTF.urls"
 
 TEMPLATES = [
