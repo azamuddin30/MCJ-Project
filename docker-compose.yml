@@ -8,9 +8,9 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASS=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PWD}
+      - POSTGRES_DB=${POSTGRES_NAME}
       - POSTGRES_PORT=5432
 
 
@@ -27,11 +27,11 @@ services:
     ports:
       - 8000:8000
     environment:
-      - DJANGO_SECRET_KEY=django-insecure-has@*g4(tqpe^3aes6vzf(5qyuxlg4&e@%8w@^gv8ueqa%of=b
-      - DJANGO_DEBUG=True
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PWD}
+      - POSTGRES_DB=${POSTGRES_NAME}
 
     links:
       - db:db
