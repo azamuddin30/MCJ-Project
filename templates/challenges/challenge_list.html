@@ -1,23 +1,23 @@
-{% extends "registration/base.html" %} {% load django_bootstrap5 %} 
+{% extends "registration/base.html" %} {% load django_bootstrap5 %}
 {% block content %}
 <div class="p-5 text-white text-center">
   <h1>Challenges</h1>
 </div>
 
-<div class="d-flex flex-wrap gap-3">
+<div class="d-flex flex-wrap  justify-content-start">
 
-{% for challenge in challenge_list %}
-<div class="card flex-fill">
+  {% for challenge in challenge_list %}
+  <div class="card w-25 h-25  ">
     <div class="card-header">
       <p>{{ challenge.category }}</p>
     </div>
     <div class="card-body">
-        <p class="card-title">{{ challenge.title }}</p>
-        <p class="card-text">{{ challenge.point }}</p>
-        <a href="{{challenge.get_absolute_url}}" class="btn btn-primary">Solve</a>
+      <p class="card-title">{{ challenge.title }}</p>
+      <p class="card-text">{{ challenge.point }}</p>
+      <a href="{{challenge.get_absolute_url}}" class="btn btn-primary">Solve</a>
     </div>
-</div>
-{% endfor %} 
+  </div>
+  {% endfor %}
 
 </div>
 {% endblock %}

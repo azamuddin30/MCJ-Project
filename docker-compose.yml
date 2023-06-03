@@ -6,47 +6,54 @@ services:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASS=${POSTGRES_PWD}
-      - POSTGRES_DB=${POSTGRES_NAME}
-      - POSTGRES_PORT=5432
-
-
+    env_file:
+      - .env
     networks:
-      service-network:
-        aliases:
-          - db
+      - db_network
+
 
   web:
     build: .
     command: gunicorn MCJCTF.wsgi -b 0.0.0.0:8000
     volumes:
       - .:/code
-    ports:
-      - 8000:8000
-    environment:
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-      - DJANGO_DEBUG=${DJANGO_DEBUG}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASS=${POSTGRES_PWD}
-      - POSTGRES_DB=${POSTGRES_NAME}
+      - static_volume:/code/static  # <-- bind the static volume
+      - media_volume:/code/media
+
+    env_file:
+      - .env
 
     links:
       - db:db
     depends_on:
       - db
     networks:
-      service-network:
-        aliases:
-          - web
+      - nginx_network
+      - db_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - static_volume:/code/static  # <-- bind the static volume
+      - media_volume:/code/media
+    depends_on:
+      - web
+    networks:  # <-- here
+      - nginx_network
 
 volumes:
   postgres_data:
+  static_volume:  # <-- declare the static volume
+  media_volume:  # <-- declare the media volume
+
 
 
 networks:
-  service-network:
-    name: service-network
+  db_network:
+    driver: bridge
+
+  nginx_network:
     driver: bridge

@@ -4,28 +4,30 @@
 {% block content %}
 
 <div class="container">
-<h1>Submit Flag</h1>
-<h2>{{ challenge.title }}</h2>
-<p>Category :{{ challenge.category }}</p>
-<p>Description : {{ challenge.description }}</p>
-<p>Points : {{ challenge.point }}</p>
-<p>Files : <a href="{{ challenge.challenge_file_link }}">{{ challenge.challenge_file_link }}</a></p>
+    <h1>Submit Flag</h1>
+    <h2>{{ challenge.title }}</h2>
+    <p>Category :{{ challenge.category }}</p>
+    <p>Description : {{ challenge.description }}</p>
+    <p>Points : {{ challenge.point }}</p>
+    {% if challenge.challenge_file_link %}
+    <p>Files : <a href="{{ challenge.challenge_file_link }}">{{ challenge.challenge_file_link }}</a></p>
+    {% endif %}
 </div>
 
 <form method="post" class="container">
-  {%csrf_token %} 
-  {%bootstrap_form form%} 
-  
-  {%bootstrap_button button_type="reset" content="Reset"%}
-  {%bootstrap_button button_type="submit" content="OK"%} 
+    {%csrf_token %}
+    {%bootstrap_form form%}
+
+    {%bootstrap_button button_type="reset" content="Reset"%}
+    {%bootstrap_button button_type="submit" content="OK"%}
 </form>
 
 {% comment %} {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
         {% endfor %}
-    </ul>
+</ul>
 {% endif %} {% endcomment %}
 <br>
 <div class="container ">

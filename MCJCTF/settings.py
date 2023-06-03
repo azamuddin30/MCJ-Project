@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # new
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -75,6 +76,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
+
 ]
 
 SITE_ID = 1
@@ -142,12 +145,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# STATIC_URL = "static/"
+# STATICFILES_DIRS = [BASE_DIR / "static"]  
+# STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'static')  # new
+# STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"  # new
+
+
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]  # new
 STATIC_ROOT = BASE_DIR / "staticfiles"  # new
+# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"  # new
 
-MEDIA_URL = "/media/"  # new
+MEDIA_URL = "media/"  # new
+# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')  # new
 MEDIA_ROOT = BASE_DIR / "media"  # new
 
 # Default primary key field type
@@ -161,7 +172,6 @@ LOGIN_REDIRECT_URL = "home"  # new
 LOGOUT_REDIRECT_URL = "home"  # new
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # new
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # new
@@ -171,3 +181,5 @@ EMAIL_HOST_USER = env("DEF_EMAIL")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # new
