@@ -24,7 +24,7 @@ class Comment(models.Model) :
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.title
+        return self.body
     
     def get_absolute_url(self) :
         return reverse("head_detail", kwargs={"pk":self.head.pk})
