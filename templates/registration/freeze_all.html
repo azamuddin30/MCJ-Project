@@ -1,0 +1,20 @@
+{% extends "registration/base.html" %}
+{% load django_bootstrap5 %}
+
+
+{% block content %}
+<h2>Freeze/Unfreeze All Team</h2>
+
+
+
+<form method="post" class="container">
+  {%csrf_token %} 
+  {%bootstrap_form form%} 
+  
+  {%bootstrap_button button_type="reset" content="Reset"%}
+  {%bootstrap_button button_type="submit" content="OK"%} 
+</form>
+
+
+<a class="btn" href="{% url 'freeze_list' %}">Back</a>
+{% endblock content %}

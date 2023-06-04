@@ -34,21 +34,32 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User, Team
 
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ["username", "email", "password1", "password2"]
+
 
 class TeamRegisterForm(forms.ModelForm):
     class Meta:
         model = Team
-        fields = ['name', 'description']
+        fields = ["name", "description"]
+
 
 class UserEditForm(forms.ModelForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'team']
+        fields = ["username", "email", "team"]
+
+
+class SetAllInActive(forms.Form):
+    all_team = forms.BooleanField()
+
+
+class SetAllActive(forms.Form):
+    all_team = forms.BooleanField()

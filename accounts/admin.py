@@ -12,9 +12,11 @@ class CustomUserAdmin(UserAdmin):
     model = User
     list_display = [  
         "username",
+        "team",
         "email",
         "is_staff",
         "is_superuser",
+        "is_active",
     ]
     fieldsets = UserAdmin.fieldsets + (
         ('Team', {'fields': ('team',)}),

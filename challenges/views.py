@@ -172,5 +172,3 @@ class ChallengeDetailView(LoginRequiredMixin,UserPassesTestMixin,FormView):
     def handle_no_permission(self):
         messages.warning(self.request, 'Please register yourself into team or register your team')
         return redirect('edit_user')
-
-

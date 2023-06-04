@@ -51,12 +51,15 @@
               {% endif %}
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              {% if user.is_staff %}
+              {% if user.is_staff or user.is_superuser%}
               <li class="nav-item">
                 <a class="nav-link" href="/admin">Login Admin</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'create_challenge' %}">Create Challenge</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'freeze_list' %}">Freeze User</a>
               </li>
               {% endif %} {% if user.is_authenticated %}
 
