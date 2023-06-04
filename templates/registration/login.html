@@ -1,4 +1,4 @@
-{% extends "registration/base.html" %} 
+{% extends "registration/base.html" %}
 {% load django_bootstrap5 %}
 
 
@@ -7,9 +7,13 @@
 <h2>Log In</h2>
 <form method="post">
     {%csrf_token%}
-    {%bootstrap_form form%} 
-    {%bootstrap_button button_type="submit" content="OK"%} 
-    {%bootstrap_button button_type="reset" content="Cancel"%} 
+    {%bootstrap_form form%}
+ 
+    <div class="d-flex ">
+        <button type="reset" class="btn btn-primary col">Reset</button>
+        <div class="col-8"></div>
+        <button type="submit" class="btn btn-primary col">Submit</button>
+    </div>
 </form>
 <hr>
 <a class="button btn-primary" href="{% url 'password_reset' %}">Reset Password</a>

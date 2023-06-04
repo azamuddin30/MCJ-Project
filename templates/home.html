@@ -1,4 +1,4 @@
-{% extends "registration/base.html" %} 
+{% extends "registration/base.html" %}
 {% load django_bootstrap5 %}
 
 
@@ -7,13 +7,35 @@
 
 {% block content %}
 
-<h2> HOME PAGE</h2>
 
-{% if user.is_authenticated %}
-Hi {{ user.username }}! You are {{ user.email }}
-<!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
-{% else %}
-<p>You are not logged in</p>
 
-{% endif %}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">CTF Competition</h1>
+        <p class="col-md-8 fs-4">Join us for an exciting and challenging experience!</p>
+        <a class="btn btn-primary btn-lg" type="button" href="{% url 'signup'%}">Sign Up</a>
+    </div>
+</div>
+
+<div class="row align-items-md-stretch">
+    <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-dark rounded-3">
+            <h2>Browse the forum</h2>
+            <p>View the forum and ask the overlords for clarification.</p>
+            <a class="btn btn-outline-light" type="button" href="{% url 'head_list' %}" >Join the Forum</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <h2>Check out challenges.</h2>
+            <p>Test yourself and try to solve our challenges</p>
+            <a class="btn btn-outline-secondary" type="button" href="{% url 'view_challenge'%}" >View the challenges</a>
+        </div>
+    </div>
+</div>
+<footer class="pt-3 mt-4 text-body-secondary border-top">
+    &copy; MCJCTF 2023
+</footer>
+
+
 {% endblock content %}

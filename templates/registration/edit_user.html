@@ -5,20 +5,18 @@
 {% block content %}
 <h2>Edit Profile</h2>
 <form method="post" class="container">
-  {%csrf_token %} 
-  {%bootstrap_form form%} 
-  
-  {%bootstrap_button button_type="reset" content="Reset"%}
-  {%bootstrap_button button_type="submit" content="OK"%} 
+  {%csrf_token %}
+  {%bootstrap_form form%}
+
+  <div class="d-flex justify-content-evenly flex-wrap gap-3">
+    <button type="reset" class="btn btn-primary w-10 h-25 ">Reset</button>
+    <a href="{% url 'home' %}" class="btn btn-primary w-10 h-25">Back to Home</a>
+    <a href="{% url 'register_team' %}" class="btn btn-primary w-10 h-25">Register Team</a>
+    <button type="submit" class="btn btn-primary w-10 h-25">Submit</button>
+  </div>
 </form>
 
-<hr>
-<div class="container">
-  <div class="row">
-    <div class="col"><a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a></div>
-    <div class="col-6"></div>
-    <div class="col"><a href="{% url 'register_team' %}" class="btn btn-primary">Register Team</a></div>
-  </div>
-</div>
+
+
 
 {% endblock content %}
