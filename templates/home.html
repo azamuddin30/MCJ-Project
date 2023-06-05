@@ -9,17 +9,21 @@
 
 
 
-<div class="p-5 mb-4 bg-body-tertiary rounded-3">
-    <div class="container-fluid py-5">
+<div class="p-5 mb-4 bg-body-tertiary rounded-3" >
+    <div class="container-fluid py-5  rounded-3 ">
         <h1 class="display-5 fw-bold">CTF Competition</h1>
         <p class="col-md-8 fs-4">Join us for an exciting and challenging experience!</p>
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary btn-lg" type="button" href="{% url 'edit_user'%}">Join or Create A Team</a>
+        {% else %}
         <a class="btn btn-primary btn-lg" type="button" href="{% url 'signup'%}">Sign Up</a>
+        {% endif %}
     </div>
 </div>
 
-<div class="row align-items-md-stretch">
+<div class="row align-items-md-stretch" >
     <div class="col-md-6">
-        <div class="h-100 p-5 text-bg-dark rounded-3">
+        <div class="h-100 p-5 text-bg-dark  rounded-3">
             <h2>Browse the forum</h2>
             <p>View the forum and ask the overlords for clarification.</p>
             <a class="btn btn-outline-light" type="button" href="{% url 'head_list' %}" >Join the Forum</a>
@@ -33,9 +37,7 @@
         </div>
     </div>
 </div>
-<footer class="pt-3 mt-4 text-body-secondary border-top">
-    &copy; MCJCTF 2023
-</footer>
+
 
 
 {% endblock content %}

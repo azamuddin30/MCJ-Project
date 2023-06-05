@@ -5,30 +5,30 @@
 
 {% block content %}
 
+<section class="container">
+    <h1>Team Scoreboard</h1>
 
-<h1>Ranking</h1>
 
-
-<table class="table table-dark table-hover">
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for team_score in team_scores %}
+    <table class="table table-dark table-hover">
+        <thead>
             <tr>
-            {% with forloop.counter as rank %}
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team_score in team_scores %}
+            <tr>
+                {% with forloop.counter as rank %}
                 <td>{{ rank }}</td>
                 <td>{{ team_score.team.name }}</td>
                 <td>{{ team_score.score }}</td>
-            {% endwith %}
+                {% endwith %}
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 
 {% endblock %}
