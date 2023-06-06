@@ -33,7 +33,7 @@ class RegisterUserView(FormView):
 class RegisterTeamView(LoginRequiredMixin, FormView):
     template_name = "registration/signup_team.html"
     form_class = TeamRegisterForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("edit_user")
 
     def form_valid(self, form):
         form.save()
