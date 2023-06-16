@@ -1,10 +1,10 @@
-
 from django import forms
 from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from django.contrib.auth.hashers import make_password
+
 # from django.db.models import Q
 # Create your views here.
 from django.http import HttpResponse
@@ -21,7 +21,14 @@ from scoreboards.models import ScoreboardUser, ScoreboardTeam, AcceptedSolution
 
 class ChallengeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Challenge
-    fields = ["title", "category", "description", "flag", "point", "challenge_file_link"]
+    fields = [
+        "title",
+        "category",
+        "description",
+        "flag",
+        "point",
+        "challenge_file_link",
+    ]
     template_name = "challenges/challenge_form.html"
     success_url = reverse_lazy("view_challenge")
 
@@ -121,54 +128,70 @@ class ChallengeListView(LoginRequiredMixin, ListView):
 
 #         return super(ChallengeSubmitFlagView, self).form_valid(form)
 
-class ChallengeForm(forms.Form):
-    flag = forms.CharField(label='Flag', max_length=255)
 
-class ChallengeDetailView(LoginRequiredMixin,UserPassesTestMixin,FormView):
-    template_name = 'challenges/challenge_detail.html'
+class ChallengeForm(forms.Form):
+    flag = forms.CharField(label="Flag", max_length=255)
+
+
+class ChallengeDetailView(LoginRequiredMixin, UserPassesTestMixin, FormView):
+    template_name = "challenges/challenge_detail.html"
     form_class = ChallengeForm
-    success_url = reverse_lazy('view_challenge')
+    success_url = reverse_lazy("view_challenge")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        challenge_id = self.kwargs['pk']
+        challenge_id = self.kwargs["pk"]
         challenge = Challenge.objects.get(id=challenge_id)
-        context['challenge'] = challenge
+        context["challenge"] = challenge
         return context
 
     def form_valid(self, form):
-        challenge_id = self.kwargs['pk']
+        challenge_id = self.kwargs["pk"]
         challenge = Challenge.objects.get(id=challenge_id)
-        submitted_flag = form.cleaned_data['flag']
+        submitted_flag = form.cleaned_data["flag"]
         if submitted_flag == challenge.flag:
             user = self.request.user
             if not user.is_staff and not user.is_superuser:
                 team = user.team
-                if not AcceptedSolution.objects.filter(team=team, challenge=challenge).exists():
+                if not AcceptedSolution.objects.filter(
+                    team=team, challenge=challenge
+                ).exists():
                     AcceptedSolution.objects.create(team=team, challenge=challenge)
-                    scoreboard_user, created = ScoreboardUser.objects.get_or_create(user=user)
+                    scoreboard_user, created = ScoreboardUser.objects.get_or_create(
+                        user=user
+                    )
                     scoreboard_user.score += challenge.point
                     scoreboard_user.save()
-                    scoreboard_team, created = ScoreboardTeam.objects.get_or_create(team=team)
+                    scoreboard_team, created = ScoreboardTeam.objects.get_or_create(
+                        team=team
+                    )
                     scoreboard_team.score += challenge.point
                     scoreboard_team.save()
                     # Flag is correct and entry added to AcceptedSolution and score updated
-                    messages.success(self.request, 'Flag is correct')
+                    messages.success(self.request, "Flag is correct")
 
                 else:
                     # Flag is correct but entry already exists in AcceptedSolution
-                    messages.warning(self.request, 'Flag is correct but already submitted')
-            else :
+                    messages.warning(
+                        self.request, "Flag is correct but already submitted"
+                    )
+            else:
                 # Flag is correct but user is staff or superuser
-                messages.warning(self.request, 'Flag is correct')
+                messages.warning(self.request, "Flag is correct")
         else:
             # Flag is incorrect
-                messages.error(self.request, 'Flag is incorrect')
+            messages.error(self.request, "Flag is incorrect")
         return super().form_valid(form)
 
     def test_func(self):
-        return self.request.user.team is not None or self.request.user.is_staff or self.request.user.is_superuser
+        return self.request.user.is_active and (
+            self.request.user.team is not None
+            or self.request.user.is_staff
+            or self.request.user.is_superuser
+        )
 
     def handle_no_permission(self):
-        messages.warning(self.request, 'Please register yourself into team or register your team')
-        return redirect('edit_user')
+        messages.warning(
+            self.request, "Please register yourself into team or register your team or contact admin"
+        )
+        return redirect("home")

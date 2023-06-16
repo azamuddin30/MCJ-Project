@@ -15,7 +15,13 @@ from typing import Any, Dict
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, View
-from .forms import UserRegisterForm, TeamRegisterForm, UserEditForm, SetAllInActive, SetAllActive
+from .forms import (
+    UserRegisterForm,
+    TeamRegisterForm,
+    UserEditForm,
+    SetAllInActive,
+    SetAllActive,
+)
 from django.urls import reverse_lazy
 from .models import Team, User
 
@@ -30,7 +36,7 @@ class RegisterUserView(FormView):
         return super().form_valid(form)
 
 
-class RegisterTeamView(LoginRequiredMixin, FormView):
+class RegisterTeamView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = "registration/signup_team.html"
     form_class = TeamRegisterForm
     success_url = reverse_lazy("edit_user")
@@ -39,8 +45,11 @@ class RegisterTeamView(LoginRequiredMixin, FormView):
         form.save()
         return super().form_valid(form)
 
+    def test_func(self):
+        return self.request.user.is_active
 
-class EditUserView(LoginRequiredMixin, FormView):
+
+class EditUserView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = "registration/edit_user.html"
     form_class = UserEditForm
     success_url = reverse_lazy("home")
@@ -54,6 +63,9 @@ class EditUserView(LoginRequiredMixin, FormView):
         form.save()
         return super().form_valid(form)
 
+    def test_func(self):
+        return self.request.user.is_active
+
 
 class FreezeTeamListView(UserPassesTestMixin, ListView):
     model = Team
@@ -61,7 +73,7 @@ class FreezeTeamListView(UserPassesTestMixin, ListView):
     context_object_name = "teams"
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.is_superuser
+        return self.request.user.is_active and (self.request.user.is_staff or self.request.user.is_superuser)
 
 
 class FreezeTeamActiveStatusView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -70,7 +82,7 @@ class FreezeTeamActiveStatusView(LoginRequiredMixin, UserPassesTestMixin, ListVi
     context_object_name = "users"
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.is_superuser
+        return self.request.user.is_active and (self.request.user.is_staff or self.request.user.is_superuser)
 
     # def form_valid(self, form) :
     #     User.objects.filter(is_staff=False, is_superuser=False).update(is_active=False)
@@ -93,7 +105,7 @@ class UnFreezeTeamActiveStatusView(LoginRequiredMixin, UserPassesTestMixin, List
     context_object_name = "users"
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.is_superuser
+        return self.request.user.is_active and (self.request.user.is_staff or self.request.user.is_superuser)
 
     # def form_valid(self, form) :
     #     User.objects.filter(is_staff=False, is_superuser=False).update(is_active=False)
@@ -109,28 +121,28 @@ class UnFreezeTeamActiveStatusView(LoginRequiredMixin, UserPassesTestMixin, List
         User.objects.filter(team=team_id).update(is_active=True)
         return super().get(request, *args, **kwargs)
 
+
 class FreezeAllView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = "registration/freeze_all.html"
     form_class = SetAllInActive
     success_url = reverse_lazy("freeze_list")
 
     def form_valid(self, form):
-       
         User.objects.filter(is_staff=False, is_superuser=False).update(is_active=False)
         return super().form_valid(form)
-    
+
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.is_superuser
-    
+        return self.request.user.is_active and (self.request.user.is_staff or self.request.user.is_superuser)
+
+
 class UnFreezeAllView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = "registration/freeze_all.html"
     form_class = SetAllActive
     success_url = reverse_lazy("freeze_list")
 
     def form_valid(self, form):
-       
         User.objects.filter(is_staff=False, is_superuser=False).update(is_active=True)
         return super().form_valid(form)
-    
+
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.is_superuser
+        return self.request.user.is_active and (self.request.user.is_staff or self.request.user.is_superuser)
