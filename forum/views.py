@@ -28,7 +28,7 @@ class HeadCreateView(LoginRequiredMixin, CreateView):
 class HeadDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): 
     model = Head
     template_name = "forums/forum_delete.html"
-    success_url = reverse_lazy("forum_list")
+    success_url = reverse_lazy("head_list")
 
     def test_func(self):  
         obj = self.get_object()
