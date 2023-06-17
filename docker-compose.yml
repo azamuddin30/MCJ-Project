@@ -17,7 +17,7 @@ services:
     command: gunicorn MCJCTF.wsgi -b 0.0.0.0:8000
     volumes:
       - .:/code
-      - static_volume:/code/static  # <-- bind the static volume
+      - static_volume:/code/staticfiles  # <-- bind the static volume
       - media_volume:/code/media
 
     env_file:
@@ -37,7 +37,7 @@ services:
       - 80:80
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - static_volume:/code/static  # <-- bind the static volume
+      - static_volume:/code/staticfiles  # <-- bind the static volume
       - media_volume:/code/media
     depends_on:
       - web
