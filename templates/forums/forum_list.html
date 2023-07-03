@@ -26,9 +26,9 @@
   </div>
   <div class="card-footer">
     {% for comment in head.comment_set.all %}
-    <div class="container p-2 my-1 bg-dark text-white">
+    <div class="container p-2 my-1 ">
       <p>
-        <span class="font-weight-bold"> {{ comment.author }} &middot; </span>
+        <span class="font-weight-bold"> {{ comment.author }} :  </span>
         {{ comment.body }}
       </p>
       <a href="{% url 'comment_delete' comment.pk %}">Delete</a>

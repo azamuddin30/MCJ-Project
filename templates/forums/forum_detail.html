@@ -12,7 +12,7 @@
 <hr>
 <h4>Comments</h4>
 {% for comment in head.comment_set.all %}
-<p>{{ comment.author }} &middot; {{ comment.body }}</p>
+<p>{{ comment.author }} : {{ comment.body }}</p>
 {% endfor %}
 <hr>
 
