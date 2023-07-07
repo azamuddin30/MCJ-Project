@@ -4,7 +4,7 @@
 
 File : .env
 
-```
+```python
 
 
 # create  .env file in project directory, same directory as manage.py, eg: touch .env 
