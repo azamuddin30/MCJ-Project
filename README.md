@@ -2,8 +2,11 @@
 
 ##### Requirements : docker, create .env file on your production machine
 
+File : .env
 
 ```
+
+
 # create  .env file in project directory, same directory as manage.py, eg: touch .env 
 
 # The format of the connection string is postgresql://[user[:password]@][netloc][:port][/dbname][?param1=value1&...] # or use sqlite DATABASE_URL=sqlite:///db.sqlite3 for development
