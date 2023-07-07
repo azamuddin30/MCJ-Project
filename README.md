@@ -64,13 +64,13 @@ To start docker container, change directory to project directory, where manage.p
 then run this. if use latest docker compose, just replace "docker-compose" to "docker compose"
 
 
-1. cd /path/to/your/fav/directory
+#### 1. cd /path/to/your/fav/directory
 
-2. Run git clone https://github.com/azamuddin30/MCJ-Project.git
+#### 2. Run git clone https://github.com/azamuddin30/MCJ-Project.git
 
-3. To run source code, there are two ways 
+#### 3. To run source code, there are two ways 
 
-#### using Django Built-In WebServer for development 
+##### using Django Built-In WebServer for development 
 
 - go to folder containing manage.py
 
@@ -97,7 +97,7 @@ then run this. if use latest docker compose, just replace "docker-compose" to "d
 
 
 
-#### using docker-compose.yml
+##### using docker-compose.yml
 
 - go to folder containing manage.py
 
